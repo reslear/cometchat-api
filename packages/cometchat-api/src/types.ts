@@ -1,3 +1,15 @@
+export type UserId = string
+
+export interface ICometchatApiError {
+  error: {
+    message: string
+    devMessage: string
+    source: string
+    details?: string
+    code: string
+  }
+}
+
 export interface CometchatApiConfig {
   apiKey: string
   appId: string

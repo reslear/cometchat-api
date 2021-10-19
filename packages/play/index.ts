@@ -1,10 +1,17 @@
 import express, { Request, Response } from 'express'
-import { useCometchatApi } from 'cometchat-api'
+import { useCometchatApi, CometchatApiError } from 'cometchat-api'
 import chalk from 'chalk'
 import asyncHandler from 'express-async-handler'
 
 const app = express()
 const port = 3001
+
+app.use(express.json({ limit: '10mb' }))
+app.use(
+  express.urlencoded({
+    extended: true
+  })
+)
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
@@ -45,17 +52,27 @@ app
 
       console.log(json)
 
-      if (json.withAuthToken) {
+      if (json?.withAuthToken) {
         json.withAuthToken = Boolean(json.withAuthToken)
       }
 
-      if (!json.name || !json.uid || !json.withAuthToken) {
+      if (!json?.name || !json?.uid || !json?.withAuthToken) {
         throw new Error('no name, uid or withAuthToken')
       }
 
-      const result = await cometChatApi.createUser(json)
+      try {
+        const result = await cometChatApi.createUser(json)
+        res.send({ result })
+      } catch (e) {
+        res.status(400)
 
-      res.send({ result })
+        if (e instanceof CometchatApiError) {
+          console.error(e)
+          res.send(e.message)
+        }
+
+        res.send()
+      }
     })
   )
   .post(
@@ -66,11 +83,11 @@ app
 
       console.log(json)
 
-      if (json.force) {
+      if (json?.force) {
         json.force = Boolean(json.force)
       }
 
-      if (!json.uid) {
+      if (!json?.uid) {
         throw new Error('no uid ')
       }
 

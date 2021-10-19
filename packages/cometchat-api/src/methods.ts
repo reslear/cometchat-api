@@ -1,44 +1,13 @@
-import axios from 'axios'
-import { CreateToken, CreateUser, GetUser } from '.'
-import { CometchatApiConfig, TokenList } from './types'
-
-interface CometChatApiError {
-  error: {
-    message: string
-    devMessage: string
-    source: string
-    code: string
-  }
-}
-
-function isCometChatError(e: unknown): e is CometChatApiError {
-  return (e as CometChatApiError).error !== undefined
-}
-
-// see https://www.cometchat.com/docs/chat-apis/ref
-// const chatApi = got.extend({
-//   prefixUrl: `https://${env.COMETCHAT_APP_ID}.api-${env.COMETCHAT_REGION}.cometchat.io/v3.0`,
-//   headers: {
-//     apiKey: env.COMETCHAT_API_KEY
-//   },
-//   responseType: 'json',
-//   resolveBodyOnly: true,
-//   hooks: {
-//     beforeError: [
-//       (error) => {
-//         const { response } = error
-
-//         if (response?.body && isCometChatError(response.body)) {
-//           error.message = response.body.error.message || ''
-//         }
-
-//         error.code = `${response?.statusCode || 500}`
-
-//         return error
-//       }
-//     ]
-//   }
-// })
+import axios, { AxiosError } from 'axios'
+import {
+  CreateToken,
+  CreateUser,
+  GetUser,
+  CometchatApiConfig,
+  TokenList,
+  UserId
+} from './types'
+import { CometchatApiError, isCometchatError } from './utils'
 
 export function useCometchatApi(config: CometchatApiConfig) {
   if (!config?.apiKey || !config?.appId || !config?.region) {
@@ -52,18 +21,21 @@ export function useCometchatApi(config: CometchatApiConfig) {
     }
   })
 
-  const errorHandler = (e: any) => {
-    return Promise.reject(e)
+  const errorHandler = (error: AxiosError) => {
+    if (error.response && isCometchatError(error.response.data)) {
+      return Promise.reject(new CometchatApiError(error.response.data))
+    }
+
+    return Promise.reject(error)
   }
 
-  inst.interceptors.response.use(
-    (response) => {
-      // if (isCometChatError(response.data)) {
-      //   throw new Error('CometChatError')
-      // }
+  inst.interceptors.request.use(
+    (request) => request,
+    (error) => errorHandler(error)
+  )
 
-      return response
-    },
+  inst.interceptors.response.use(
+    (response) => response,
     (error) => errorHandler(error)
   )
 
