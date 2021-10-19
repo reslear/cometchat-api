@@ -1,0 +1,34 @@
+{
+  "name": "cometchat-api",
+  "version": "1.0.0",
+  "description": "simple cometchat api methods with typescript support",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsup src/index.ts --clean --dts --no-splitting",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/reslear/cometchat-api.git"
+  },
+  "keywords": [
+    "cometchat",
+    "api",
+    "typescript"
+  ],
+  "author": "reslear",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/reslear/cometchat-api/issues"
+  },
+  "homepage": "https://github.com/reslear/cometchat-api#readme",
+  "devDependencies": {
+    "@tsconfig/node16": "^1.0.2",
+    "tsup": "^5.4.1",
+    "typescript": "^4.4.4"
+  },
+  "dependencies": {
+    "axios": "^0.23.0"
+  }
+}

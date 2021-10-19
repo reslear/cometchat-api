@@ -1,0 +1,21 @@
+{
+	"folders": [
+		{
+			"name": "✨ cometchat-api-monorepo",
+			"path": ".."
+		},
+		{
+			"name": "🚀 cometchat-api",
+			"path": "../packages/cometchat-api"
+		},
+		{
+			"name": "📦 play",
+			"path": "../packages/play"
+		}
+	],
+	"settings": {
+		"cSpell.words": [
+			"cometchat"
+		]
+	}
+}
