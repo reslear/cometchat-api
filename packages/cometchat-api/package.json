@@ -4,13 +4,13 @@
   "description": "simple cometchat api methods with typescript support",
   "main": "src/index.ts",
   "publishConfig": {
+    "access": "public",
     "main": "dist/index.js",
     "types": "dist/index.d.ts"
   },
   "scripts": {
     "build": "tsup src/index.ts --clean --dts --no-splitting",
-    "copy": "cp ../../README.md dist/README.md",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prepublishOnly": "cp ../../README.md README.md"
   },
   "repository": {
     "type": "git",
@@ -36,6 +36,7 @@
     "axios": "^0.23.0"
   },
   "files": [
-    "dist"
+    "dist",
+    "README.md"
   ]
 }

@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="logo.svg" alt="cometchat-api">
+  <img src="https://raw.githubusercontent.com/reslear/cometchat-api/HEAD/logo.svg" alt="cometchat-api">
 </p>
 <p align="center">
   <a href="https://npmjs.com/package/cometchat-api"><img src="https://img.shields.io/npm/v/cometchat-api.svg" alt="npm package"></a>
