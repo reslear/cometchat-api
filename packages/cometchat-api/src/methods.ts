@@ -24,9 +24,7 @@ export function useCometchatApi(config: CometchatApiConfig) {
 
   const createToken = async (uid: UserId, json: CreateTokenReq = {}) => {
     return await instance
-      .post<CreateTokenRes>(`users/${uid}/auth_tokens`, {
-        json
-      })
+      .post<CreateTokenRes>(`users/${uid}/auth_tokens`, json)
       .then(({ data }) => {
         return data.data ? data : null
       })
@@ -44,9 +42,7 @@ export function useCometchatApi(config: CometchatApiConfig) {
 
   const createUser = async (json: CreateUserReq) => {
     return await instance
-      .post<CreateUserRes>(`users`, {
-        json
-      })
+      .post<CreateUserRes>(`users`, json)
       .then(({ data }) => {
         return data.data ? data : null
       })
