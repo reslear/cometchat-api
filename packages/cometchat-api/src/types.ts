@@ -49,7 +49,9 @@ export interface CreateUser {
       uid: string
       name: string
       status: string
+      role?: string
       createdAt: number
+      authToken?: string
     }
   }
 }
