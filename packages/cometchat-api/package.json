@@ -1,6 +1,6 @@
 {
   "name": "cometchat-api",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "simple cometchat api methods with typescript support",
   "main": "./src/index.ts",
   "type": "module",
