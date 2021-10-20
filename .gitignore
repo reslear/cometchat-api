@@ -43,3 +43,4 @@ typings/
 
 .DS_store
 dist
+.tgz
