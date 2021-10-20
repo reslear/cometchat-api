@@ -38,17 +38,40 @@ const chat = useCometchatApi({
 })
 
 // use in code
-const user = await cometChatApi.getUser(`superhero1`)
+const user = await chat.getUser('superhero1')
 
-// result
-{
-  "data": {
-    "uid": "superhero1",
-    "name": "Iron Man",
-    "status": "offline",
-    "role": "default",
-    "createdAt": 1634636754
+//  {
+//    "data": {
+//      "uid": "superhero1",
+//      "name": "Iron Man"
+//      ...
+//    }
+//  }
+
+if (user) {
+  console.log(user.data.name) // Iron Man
+} else {
+  console.log(user) // null
+}
+```
+
+### Log Errors
+
+```ts
+import { isCometchatApiError } from 'cometchat-api'
+import { AxiosError } from 'axios'
+
+const errorHandler = (error: AxiosError) => {
+  if (error.response && isCometchatApiError(error.response.data)) {
+    console.error(error)
   }
+
+  return Promise.reject(error)
 }
 
+// https://github.com/axios/axios#interceptors
+chat.instance.interceptors.response.use(
+  (response) => response,
+  (error) => errorHandler(error)
+)
 ```

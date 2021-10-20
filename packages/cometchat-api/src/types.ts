@@ -33,39 +33,37 @@ export interface TokenList {
   }
 }
 
-export interface CreateUser {
-  req: {
+export interface CreateUserReq {
+  uid: string
+  name: string
+  avatar?: string
+  link?: string
+  role?: string
+  metadata?: string
+  withAuthToken?: boolean
+  tags?: string[]
+}
+
+export interface CreateUserRes {
+  data: {
     uid: string
     name: string
-    avatar?: string
-    link?: string
+    status: string
     role?: string
-    metadata?: string
-    withAuthToken?: boolean
-    tags?: string[]
-  }
-  res: {
-    data: {
-      uid: string
-      name: string
-      status: string
-      role?: string
-      createdAt: number
-      authToken?: string
-    }
+    createdAt: number
+    authToken?: string
   }
 }
 
-export interface CreateToken {
-  body: {
-    force?: boolean
-  }
-  resp: {
-    data: {
-      uid: string
-      authToken: string
-      createdAt: number
-    }
+export interface CreateTokenReq {
+  force?: boolean
+}
+
+export interface CreateTokenRes {
+  data: {
+    uid: string
+    authToken: string
+    createdAt: number
   }
 }
 
