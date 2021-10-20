@@ -41,7 +41,5 @@ typings/
 .env
 .env.test
 
-packages/cometchat-api/README.md
-
 .DS_store
 dist

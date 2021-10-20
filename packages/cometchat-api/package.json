@@ -2,15 +2,14 @@
   "name": "cometchat-api",
   "version": "1.0.3",
   "description": "simple cometchat api methods with typescript support",
-  "main": "src/index.ts",
+  "main": "./src/index.ts",
+  "type": "module",
   "publishConfig": {
-    "access": "public",
-    "main": "dist/index.js",
-    "types": "dist/index.d.ts"
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts"
   },
   "scripts": {
-    "build": "tsup src/index.ts --clean --dts --no-splitting",
-    "prepublishOnly": "cp ../../README.md README.md"
+    "build": "tsup src/index.ts --clean --dts --no-splitting"
   },
   "repository": {
     "type": "git",
@@ -38,5 +37,9 @@
   "files": [
     "dist",
     "README.md"
-  ]
+  ],
+  "engines": {
+    "node": ">=12",
+    "pnpm": ">=6"
+  }
 }
