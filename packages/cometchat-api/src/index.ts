@@ -16,9 +16,6 @@ export function useCometChatApi({ apiKey, appId, region }: CometChatApiConfig) {
     apiKey
   }
 
-  // UsersService.getuser
-  // AuthTokensService.
-
   return {
     instance: OpenAPI,
     users: {
@@ -37,14 +34,14 @@ export function useCometChatApi({ apiKey, appId, region }: CometChatApiConfig) {
         AuthTokensService.listauthtokens({ uid, apiKey })
     }
 
-    // Friends: api.FriendsService,
-    // Roles: api.RolesService,
-    // AuthTokens: api.AuthTokensService,
-    // BannedUsers: api.BannedUsersService,
-    // BlockedUsers: api.BlockedUsersService,
-    // Conversations: api.ConversationsService,
-    // Groups: api.GroupsService,
-    // Members: api.MembersService,
-    // Messages: api.MessagesService
+    // Friends: FriendsService,
+    // Roles: RolesService,
+    // AuthTokens: AuthTokensService,
+    // BannedUsers: BannedUsersService,
+    // BlockedUsers: BlockedUsersService,
+    // Conversations: ConversationsService,
+    // Groups: GroupsService,
+    // Members: MembersService,
+    // Messages: MessagesService
   }
 }
