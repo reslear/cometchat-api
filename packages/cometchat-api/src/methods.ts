@@ -66,3 +66,23 @@ export function useCometchatApi(config: CometchatApiConfig) {
     getTokens
   }
 }
+
+interface datas {
+  createToken: {
+    req: {}
+  }
+}
+
+const data = {
+  createToken: {
+    type: 'post',
+    url: (uid: string) => `users/${uid}/auth_tokens`
+  }
+}
+
+const result = {}
+
+for (const name of Object.entries(data)) {
+}
+
+result.createToken()

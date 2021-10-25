@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express'
-import { useCometchatApi, CometchatApiError } from 'cometchat-api'
+import { useCometchatApi } from 'cometchat-api'
 import chalk from 'chalk'
 import asyncHandler from 'express-async-handler'
 
@@ -25,7 +25,7 @@ app.use(function (err: any, req: any, res: any, next: any) {
   console.error(err.stack)
 })
 
-const cometChatApi = useCometchatApi({
+const cometchatApi = useCometchatApi({
   apiKey: process.env.COMETCHAT_API_KEY || '',
   appId: process.env.COMETCHAT_APP_ID || '',
   region: process.env.COMETCHAT_REGION || ''
@@ -40,7 +40,10 @@ app
         return
       }
 
-      const result = await cometChatApi.getUser(`${req.query.uid}`)
+      const result = await cometchatApi.users.getuser({
+        uid: `${req.query.uid}`,
+        apiKey: ''
+      })
 
       res.send({ result })
     })
