@@ -1,8 +1,8 @@
-import * as OpenAPI from 'openapi-typescript-codegen'
+import { generate, HttpClient } from 'openapi-typescript-codegen'
 
-OpenAPI.generate({
+generate({
   input: 'https://api.developerhub.io/api/public/reference/1391/raw',
   output: __dirname + '/../src/generated',
-  httpClient: OpenAPI.HttpClient.AXIOS,
+  httpClient: HttpClient.AXIOS,
   useOptions: true
 })
