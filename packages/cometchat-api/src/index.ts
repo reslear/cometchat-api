@@ -1,11 +1,8 @@
-import { OpenAPI, UsersService, AuthTokensService, ApiError } from './generated'
+import { OpenAPI, UsersService, AuthTokensService } from './generated'
 export { ApiError as CometChatApiError } from './generated'
-import { CometchatApiConfig } from './types'
+import { CometChatApiConfig, RequestBody } from './types'
 
-type RequestBody<T extends (...args: any) => any> =
-  Parameters<T>[0]['requestBody']
-
-export function useCometChatApi({ apiKey, appId, region }: CometchatApiConfig) {
+export function useCometChatApi({ apiKey, appId, region }: CometChatApiConfig) {
   if (!apiKey || !appId || !region) {
     throw new Error('not correct set config')
   }
