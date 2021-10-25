@@ -9,7 +9,7 @@
   },
   "scripts": {
     "build": "tsup ./src/index.ts --clean --dts --no-splitting",
-    "parse": "ts-node ./scripts/index.ts"
+    "gen": "ts-node ./scripts/index.ts"
   },
   "repository": {
     "type": "git",

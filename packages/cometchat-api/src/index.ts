@@ -1,31 +1,53 @@
-import * as api from './generated'
+import { OpenAPI, UsersService, AuthTokensService, ApiError } from './generated'
+export { ApiError as CometChatApiError } from './generated'
 import { CometchatApiConfig } from './types'
 
-export function useCometchatApi(config: CometchatApiConfig) {
-  if (!config?.apiKey || !config?.appId || !config?.region) {
+type RequestBody<T extends (...args: any) => any> =
+  Parameters<T>[0]['requestBody']
+
+export function useCometChatApi({ apiKey, appId, region }: CometchatApiConfig) {
+  if (!apiKey || !appId || !region) {
     throw new Error('not correct set config')
   }
 
-  api.OpenAPI.BASE = api.OpenAPI.BASE.replace('<appId>', config.appId).replace(
+  OpenAPI.BASE = OpenAPI.BASE.replace('<appId>', appId).replace(
     '<region>',
-    config.region
+    region
   )
 
-  api.OpenAPI.HEADERS = {
-    apiKey: config.apiKey
+  OpenAPI.HEADERS = {
+    apiKey
   }
 
+  // UsersService.getuser
+  // AuthTokensService.
+
   return {
-    instance: api.OpenAPI,
-    Users: api.UsersService,
-    Friends: api.FriendsService,
-    Roles: api.RolesService,
-    AuthTokens: api.AuthTokensService,
-    BannedUsers: api.BannedUsersService,
-    BlockedUsers: api.BlockedUsersService,
-    Conversations: api.ConversationsService,
-    Groups: api.GroupsService,
-    Members: api.MembersService,
-    Messages: api.MessagesService
+    instance: OpenAPI,
+    users: {
+      createUser: (requestBody: RequestBody<typeof UsersService.createuser>) =>
+        UsersService.createuser({ apiKey, requestBody }),
+      getUser: (
+        options: Omit<Parameters<typeof UsersService.getuser>[0], 'apiKey'>
+      ) => UsersService.getuser({ apiKey, ...options })
+    },
+    tokens: {
+      createToken: (
+        uid: string,
+        requestBody: RequestBody<typeof AuthTokensService.createauthtoken>
+      ) => AuthTokensService.createauthtoken({ uid, apiKey, requestBody }),
+      listTokens: (uid: string) =>
+        AuthTokensService.listauthtokens({ uid, apiKey })
+    }
+
+    // Friends: api.FriendsService,
+    // Roles: api.RolesService,
+    // AuthTokens: api.AuthTokensService,
+    // BannedUsers: api.BannedUsersService,
+    // BlockedUsers: api.BlockedUsersService,
+    // Conversations: api.ConversationsService,
+    // Groups: api.GroupsService,
+    // Members: api.MembersService,
+    // Messages: api.MessagesService
   }
 }

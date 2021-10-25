@@ -44,3 +44,4 @@ typings/
 .DS_store
 dist
 .tgz
+packages/cometchat-api/src/generated

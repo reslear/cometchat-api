@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express'
-import { useCometchatApi } from 'cometchat-api'
+import { useCometChatApi, CometChatApiError } from 'cometchat-api'
 import chalk from 'chalk'
 import asyncHandler from 'express-async-handler'
 
@@ -25,7 +25,7 @@ app.use(function (err: any, req: any, res: any, next: any) {
   console.error(err.stack)
 })
 
-const cometchatApi = useCometchatApi({
+const cometChatApi = useCometChatApi({
   apiKey: process.env.COMETCHAT_API_KEY || '',
   appId: process.env.COMETCHAT_APP_ID || '',
   region: process.env.COMETCHAT_REGION || ''
@@ -40,9 +40,8 @@ app
         return
       }
 
-      const result = await cometchatApi.users.getuser({
-        uid: `${req.query.uid}`,
-        apiKey: ''
+      const result = await cometChatApi.users.getUser({
+        uid: `${req.query.uid}`
       })
 
       res.send({ result })
@@ -64,12 +63,12 @@ app
       }
 
       try {
-        const result = await cometChatApi.createUser(json)
+        const result = await cometChatApi.users.createUser(json)
         res.send({ result })
       } catch (e) {
         res.status(400)
 
-        if (e instanceof CometchatApiError) {
+        if (e instanceof CometChatApiError) {
           console.error(e)
           res.send(e.message)
         }
@@ -94,7 +93,7 @@ app
         throw new Error('no uid ')
       }
 
-      const result = await cometChatApi.createToken(
+      const result = await cometChatApi.tokens.createToken(
         json.uid,
         json.force ? { force: true } : {}
       )
